@@ -5,7 +5,7 @@ import './AppBar.css';
 
 interface AppBarProps {
     route: string;
-    children: JSX.Element[],
+    children: any,
 }
 
 export const AppBar: React.FC<AppBarProps> = ({route, children}) => {

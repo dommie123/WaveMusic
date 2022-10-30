@@ -1,0 +1,17 @@
+#play-btn {
+    width: 50px;
+    height: 50px;
+}
+
+#skip-back-btn {
+    margin-top: 20px;
+}
+
+#skip-forward-btn {
+    margin-top: 20px;
+}
+
+#vol-slider {
+    margin-top: 20px;
+    margin-left: 10%;
+}

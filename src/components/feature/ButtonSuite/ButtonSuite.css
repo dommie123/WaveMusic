@@ -1,0 +1,14 @@
+.suite-container {
+    width: 100%;
+    height: 10%;
+    position: relative;
+    bottom: 0;
+    display: flex;
+    border-top: 1px solid gray;
+}
+
+.suite-container > .icon-btn {
+    margin: 10px 10px;
+    width: auto;
+    height: 30px;
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import SearchIcon from '@mui/icons-material/Search';
 
+import { IconButton } from "../IconButton/IconButton";
+
 import './SearchBar.css';
 
 interface SearchBarProps {
@@ -11,9 +13,10 @@ interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = ({label, onChange}) => {
     return (
         <div className="search-container">
-            {/* <label className="search-bar-label">{label}</label> */}
             <input className="search-bar" type="text" name={label} placeholder={label} onChange={onChange} />
-            <button className="search-button" onClick={() => console.log("Searching...")}><SearchIcon /></button>
+            {/* <button id="search-button" onClick={() => console.log("Searching...")}><SearchIcon /></button> */}
+            <IconButton id="search-button" onClick={() => console.log("Searching...")} icon={(<SearchIcon />)}>
+            </IconButton>
         </div>
     )
 }
