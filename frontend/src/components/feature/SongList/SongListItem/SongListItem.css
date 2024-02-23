@@ -1,0 +1,11 @@
+.song-item {
+    display: inline-flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: calc(100% - 32px);
+    height: 75px;
+    align-items: center;
+    border: 1px solid gray;
+    border-bottom: 0px solid white;
+    padding: 0px 15px;
+}
