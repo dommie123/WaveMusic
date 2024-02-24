@@ -4,6 +4,7 @@
     position: relative;
     bottom: 0;
     display: flex;
+    justify-content: space-evenly;
     border-top: 1px solid gray;
 }
 

@@ -1,6 +1,7 @@
 #play-btn {
     width: 50px;
     height: 50px;
+    margin: 0px 1em;
 }
 
 #skip-back-btn {
@@ -14,4 +15,9 @@
 #vol-slider {
     margin-top: 20px;
     margin-left: 10%;
+    margin-right: 15px;
+}
+
+.music-buttons {
+    flex: 1.5;
 }
