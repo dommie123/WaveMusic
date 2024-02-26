@@ -1,8 +1,8 @@
 import React from 'react';
 import { SearchBar } from '../SearchBar/SearchBar';
-import { IconButton } from '../IconButton/IconButton';
+import { SimpleDrawer as AppDrawer } from '../Drawer/SimpleDrawer';
 
-import { Menu as MenuIcon } from '@mui/icons-material';
+import { LibraryMusic, QueueMusic } from '@mui/icons-material';
 
 import logo from '../../../assets/WaveMusic_Logo.ico';
 
@@ -14,9 +14,14 @@ interface AppBarProps {
 }
 
 export const AppBar: React.FC<AppBarProps> = ({route, children}) => {
+    const options = [
+        { icon: <LibraryMusic />, label: "Library" },
+        { icon: <QueueMusic />, label: "Playlists" }
+    ];
+
     return (
         <div className='app-bar'>
-            <IconButton className='app-menu-button' onClick={() => {}} icon={<MenuIcon />} />
+            <AppDrawer anchor='left' options={options} className='app-menu-button' />
             <img src={logo} alt='Wave Music Logo' className='app-bar-logo' width={100} height={60} />
             {children}
             <SearchBar label={`Search ${route}`} onChange={() => console.log("Change happened")} />
