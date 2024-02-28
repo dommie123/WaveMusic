@@ -14,7 +14,7 @@ function App() {
     return (
         <Provider store={store}>
             <AppBar route='Test'>
-                <h1>Test Header</h1>
+                <h1>Library</h1>
             </AppBar>
             <SongList />
             <MusicButtonSuite />

@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
-interface FileSliceState {
-    songs: Array<String>,
-    currentSong: File|null
-}
+import { backendURL } from "../configs";
 
-interface FindFilesBody {
-    path: String
+interface FileSliceState {
+    songs: any[],
+    currentSong: File|null
 }
 
 const initialState:FileSliceState = {
@@ -17,11 +15,11 @@ const initialState:FileSliceState = {
 
 export const findFiles = createAsyncThunk(
     "files/getFiles",
-    async (data:FindFilesBody, thunkApi) => {
+    async (_, thunkApi) => {
         try {
-            const res = await axios.get(`/files/${data.path}`);
+            const res = await axios.get(`${backendURL}/files`);
 
-            return { data: res.data, isFile: Boolean(res.data.files) };
+            return res.data;
         } catch (e) {
             return thunkApi.rejectWithValue(e);
         }
@@ -35,18 +33,17 @@ const fileSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(findFiles.fulfilled, (state:FileSliceState, action) => {
-            if (action.payload.isFile) {
-                return {
-                    ...state,
-                    currentSong: action.payload.data
-                }
-            }
-
             return {
                 ...state,
-                files: action.payload.data
+                songs: action.payload.music_files
             }
         });
+        builder.addCase(findFiles.rejected, (state:FileSliceState) => {
+            return {
+                ...state,
+                songs: []
+            }
+        })
     },
 });
 

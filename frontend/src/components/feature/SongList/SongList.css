@@ -1,0 +1,4 @@
+.song-list-container {
+    height: calc(100% - 175px);
+    overflow-y: auto;
+}
