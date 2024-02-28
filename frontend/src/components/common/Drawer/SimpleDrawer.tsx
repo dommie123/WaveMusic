@@ -54,13 +54,13 @@ export const SimpleDrawer:React.FC<SimpleDrawerProps> = (props) => {
             component={"div"}
             sx={{ width: (anchor === 'top' || anchor === 'bottom') ? 'auto' : 250 }}
             role="presentation"
-            onClick={toggleDrawer(anchor, true)}
-            onKeyDown={toggleDrawer(anchor, true)}
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
                 {options.map(({ icon, label, handleSelect }) => (
                     <ListItem key={label} disablePadding>
-                        <ListItemButton onClick={handleSelect}>
+                        <ListItemButton onClick={() => { toggleDrawer(anchor, false); handleSelect(); }}>
                             <ListItemIcon>
                                 {icon}
                             </ListItemIcon>
@@ -74,19 +74,15 @@ export const SimpleDrawer:React.FC<SimpleDrawerProps> = (props) => {
 
     return (
         <div className={className}>
-           {/* {(['left', 'right', 'top', 'bottom'] as const).map((anchor) => (
-                <React.Fragment key={anchor}> */}
-                    <IconButton className={`${className}-button`} onClick={toggleDrawer(anchor, true)} icon={<MenuIcon />} />
-                    <Drawer
-                        anchor={anchor}
-                        open={state[anchor]}
-                        onClose={toggleDrawer(anchor, false)}
-                        className={`${className}-drawer`}
-                    >
-                        {list(anchor)}
-                    </Drawer>
-                {/* </React.Fragment> */}
-        {/* //    ))}  */}
+            <IconButton className={`${className}-button`} onClick={toggleDrawer(anchor, true)} icon={<MenuIcon />} />
+            <Drawer
+                anchor={anchor}
+                open={state[anchor]}
+                onClose={toggleDrawer(anchor, false)}
+                className={`${className}-drawer`}
+            >
+                {list(anchor)}
+            </Drawer>
         </div>
     );
 }

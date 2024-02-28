@@ -7,15 +7,16 @@ import './SearchBar.css';
 
 interface SearchBarProps {
     label: string;
-    onChange(e:React.ChangeEvent<HTMLInputElement>):void;
+    onChange(e:React.ChangeEvent<HTMLInputElement>): void;
+    onSearch(e:React.MouseEvent<HTMLButtonElement>): void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({label, onChange}) => {
+export const SearchBar: React.FC<SearchBarProps> = ({label, onChange, onSearch}) => {
     return (
         <div className="search-container">
             <input className="search-bar" type="text" name={label} placeholder={label} onChange={onChange} />
             {/* <button id="search-button" onClick={() => console.log("Searching...")}><SearchIcon /></button> */}
-            <IconButton id="search-button" onClick={() => console.log("Searching...")} icon={(<SearchIcon />)}>
+            <IconButton id="search-button" onClick={onSearch} icon={(<SearchIcon />)}>
             </IconButton>
         </div>
     )

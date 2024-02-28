@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { SongListItem } from './SongListItem/SongListItem';
@@ -15,6 +15,8 @@ interface SongFileProperties {
 
 export const SongList:React.FC = () => {
     const songs = useSelector<RootState, any[]>(state => state.files.songs);
+    const searchTerm = useSelector<RootState, string>(state => state.files.searchTerm);
+    const [filteredSongList, setFilteredSongList] = useState<any[]>(songs);
     const dispatch:AppDispatch = useDispatch();
 
     const songList = localStorage.getItem('songList');
@@ -42,9 +44,19 @@ export const SongList:React.FC = () => {
 
     }, [songs, songList])
 
+    useEffect(() => {
+        if (searchTerm === '') {
+            setFilteredSongList(songs);
+            return;
+        }
+
+        const newSongList = songs.filter((song:SongFileProperties) => getSongProperties(song).title.toLowerCase().includes(searchTerm.toLowerCase()));
+        setFilteredSongList(newSongList);
+    }, [searchTerm])
+
     return (
         <div className='song-list-container'>
-            {songs.map(song => <SongListItem {...getSongProperties(song)} onPlay={() => {}} />)}
+            {filteredSongList.map((song:SongFileProperties) => <SongListItem {...getSongProperties(song)} onPlay={() => {}} />)}
         </div>
     )
 } 

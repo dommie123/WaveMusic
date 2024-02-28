@@ -5,12 +5,14 @@ import { backendURL } from "../configs";
 
 interface FileSliceState {
     songs: any[],
-    currentSong: File|null
+    currentSong: File|null,
+    searchTerm: string
 }
 
 const initialState:FileSliceState = {
     songs: [],
-    currentSong: null
+    currentSong: null,
+    searchTerm: '',
 }
 
 export const findFiles = createAsyncThunk(
@@ -30,7 +32,20 @@ export const findFiles = createAsyncThunk(
 const fileSlice = createSlice({
     name: "files",
     initialState, 
-    reducers: {},
+    reducers: {
+        setSearchTerm: (state:FileSliceState, action) => {
+            return {
+                ...state,
+                searchTerm: action.payload
+            }
+        },
+        clearSearchTerm: (state:FileSliceState) => {
+            return {
+                ...state,
+                searchTerm: ''
+            }
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(findFiles.fulfilled, (state:FileSliceState, action) => {
             return {
@@ -47,4 +62,5 @@ const fileSlice = createSlice({
     },
 });
 
+export const { setSearchTerm, clearSearchTerm } = fileSlice.actions;
 export default fileSlice.reducer;
