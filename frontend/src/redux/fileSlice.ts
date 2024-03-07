@@ -44,6 +44,18 @@ const fileSlice = createSlice({
                 ...state,
                 searchTerm: ''
             }
+        },
+        setCurrentSong: (state:FileSliceState, action) => {
+            return {
+                ...state,
+                currentSong: action.payload
+            }
+        },
+        setSongList: (state:FileSliceState, action) => {
+            return {
+                ...state,
+                songs: action.payload
+            }
         }
     },
     extraReducers: (builder) => {
@@ -62,5 +74,5 @@ const fileSlice = createSlice({
     },
 });
 
-export const { setSearchTerm, clearSearchTerm } = fileSlice.actions;
+export const { setSearchTerm, clearSearchTerm, setCurrentSong, setSongList } = fileSlice.actions;
 export default fileSlice.reducer;

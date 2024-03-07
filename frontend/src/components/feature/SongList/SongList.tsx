@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { SongListItem } from './SongListItem/SongListItem';
 
-import { findFiles } from '../../../redux/fileSlice';
+import { findFiles, setCurrentSong, setSongList } from '../../../redux/fileSlice';
 import { AppDispatch, RootState } from '../../../redux/store';
 
 import './SongList.css';
@@ -19,7 +19,7 @@ export const SongList:React.FC = () => {
     const [filteredSongList, setFilteredSongList] = useState<any[]>(songs);
     const dispatch:AppDispatch = useDispatch();
 
-    const songList = localStorage.getItem('songList');
+    const songList = JSON.parse(localStorage.getItem('songList') || "[]");
 
     const getSongProperties = ({ music_path, properties }:SongFileProperties) => {
         const pathParts = music_path.split(`\\`);
@@ -31,17 +31,25 @@ export const SongList:React.FC = () => {
         return { title, artist, album };
     }
 
-    useEffect(() => {
-        console.log({songs, songList});
+    const handlePlaySong = (song:any) => {
+        const songFile = new File(song.music_path, getSongProperties(song).title)
+        dispatch(setCurrentSong(songFile));
+    }
 
-        if (songs.length === 0) {
+    useEffect(() => {
+        // If no songs are in local storage, find songs and add them automatically.
+        if (songs.length === 0 && songList.length === 0) {
             dispatch(findFiles());
         }
-
-        if (songList === '' && Boolean(songs)) {
-            localStorage.setItem('songList', `${songs}`);
+        // Otherwise, pull from local storage. This prevents application slowdown.
+        else if (songs.length === 0) {
+            dispatch(setSongList(songList));
         }
 
+        // If songs are found and there are none in storage, store the list of songs.
+        if (songList.length === 0 && Boolean(songs)) {
+            localStorage.setItem('songList', JSON.stringify(songs));
+        }
     }, [songs, songList])
 
     useEffect(() => {
@@ -52,11 +60,11 @@ export const SongList:React.FC = () => {
 
         const newSongList = songs.filter((song:SongFileProperties) => getSongProperties(song).title.toLowerCase().includes(searchTerm.toLowerCase()));
         setFilteredSongList(newSongList);
-    }, [searchTerm])
+    }, [songs, searchTerm])
 
     return (
         <div className='song-list-container'>
-            {filteredSongList.map((song:SongFileProperties) => <SongListItem {...getSongProperties(song)} onPlay={() => {}} />)}
+            {filteredSongList.map((song:SongFileProperties) => <SongListItem {...getSongProperties(song)} onPlay={() => { handlePlaySong(song) }} />)}
         </div>
     )
 } 
